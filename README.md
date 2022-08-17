@@ -94,3 +94,10 @@ To stop docker container
 ```
 docker stop <container_id>
 ```
+
+
+
+TO install all the libraries mentioned  in requirements.txt
+```
+python setup.py install
+```
