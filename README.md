@@ -101,3 +101,8 @@ TO install all the libraries mentioned  in requirements.txt
 ```
 python setup.py install
 ```
+
+Install ipykernel
+```
+pip install ipykernel
+```
