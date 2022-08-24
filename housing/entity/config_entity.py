@@ -1,6 +1,4 @@
 from collections  import namedtuple
-from unicodedata import name
-
 
 DataIngestionConfig = namedtuple(
     "DataIngestionConfig",
