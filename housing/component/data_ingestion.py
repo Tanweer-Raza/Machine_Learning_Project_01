@@ -1,10 +1,6 @@
-from curses import raw
-from http.client import REQUEST_URI_TOO_LONG
-import imp
-from inspect import stack
-from urllib import request
-from housing.exception  import HousingExcecption
-import os,sys
+from housing.exception import HousingExcecption
+import os
+import sys
 from housing.logger import logging
 from housing.entity.config_entity import DataIngestionConfig
 from housing.entity.artifact_entity import DataIngestionArtifact
@@ -48,7 +44,7 @@ class DataIngestion:
             logging.info("Downloading file from : [{download_url}] into : [{tgz_file_path}]")
             #downloading file
 
-            urllib.request.request.urlretrieve(download_url, tgz_file_path)
+            urllib.request.urlretrieve(download_url, tgz_file_path)
             logging.info(f"File :[{tgz_file_path}] has been downloaded successfully")
             return tgz_file_path
         except Exception as e:
@@ -71,7 +67,7 @@ class DataIngestion:
             logging.info(f"Extraction completed")
 
         except Exception as e:
-            raise HousingExcecption(e,sys)
+            raise HousingExcecption(e,sys) from e
 
 
     def split_data_as_train_test(self) -> DataIngestionArtifact:
@@ -129,20 +125,16 @@ class DataIngestion:
             return data_ingestion_artifact
 
         except Exception as e:
-            raise HousingExcecption(e,sys)
-
-
-    def initiate_data_ingestion(self) ->DataIngestionArtifact :
-        try:
-            tgz_file_path = self.download_housing_data()
-
-            self.extract_tgz_file(tgz_file_path=tgz_file_path)
-            
-            return self.split_data_as_train_test()
-        except Exception as e :
             raise HousingExcecption(e,sys) from e
 
 
+    def initiate_data_ingestion(self)-> DataIngestionArtifact:
+        try:
+            tgz_file_path =  self.download_housing_data()
+            self.extract_tgz_file(tgz_file_path=tgz_file_path)
+            return self.split_data_as_train_test()
+        except Exception as e:
+            raise HousingExcecption(e,sys) from e
 
 
     def __del__(self):

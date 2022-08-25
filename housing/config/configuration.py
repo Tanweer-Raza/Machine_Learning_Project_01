@@ -1,4 +1,3 @@
-import sys
 from housing.component import data_ingestion
 from housing.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,\
     ModelEvaluationConfig, ModelPusherConfig,ModelTrainerConfig, TrainingPipelineConfig
@@ -36,7 +35,6 @@ class Configuration:
             )
 
             data_ingestion_info =  self.config_info[DATA_INGESTION_CONFIG_KEY]
-
             dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
             tgz_download_dir = os.path.join(
                 data_ingestion_artifact_dir,
