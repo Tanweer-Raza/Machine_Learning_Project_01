@@ -1,3 +1,4 @@
+from tkinter import E
 from housing.component import data_ingestion
 from housing.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,\
     ModelEvaluationConfig, ModelPusherConfig,ModelTrainerConfig, TrainingPipelineConfig
@@ -77,7 +78,15 @@ class Configuration:
 
 
     def get_data_validation_config(self) -> DataValidationConfig:
-        pass
+        try:
+            
+            schema_file_path = None
+            data_validation_config = DataIngestionConfig(
+                schema_file_path = schema_file_path
+            )
+            return data_validation_config
+        except Exception as e:
+            raise HousingExcecption(e,sys) from e
 
     def get_data_transformation_config(self) -> DataTransformationConfig:
         pass
