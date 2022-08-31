@@ -58,6 +58,7 @@ class DataValidation:
                 raise Exception(message)
 
             return is_available
+
         except Exception as e:
             raise HousingExcecption(e,sys) from e
 

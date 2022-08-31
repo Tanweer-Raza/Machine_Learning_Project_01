@@ -19,13 +19,14 @@ class DataIngestion:
         try:
             logging.info(f"{'='*20}Data Ingestion log started.{'='*20} ")
             self.data_ingestion_config = data_ingestion_config
-
         except Exception as e:
             raise HousingExcecption(e,sys)
+
+
     def download_housing_data(self) -> str:
         try:
             
-             #exctracting remote url to download dataset
+             #extracting remote url to download dataset
             download_url = self.data_ingestion_config.dataset_download_url
 
             #folder loacation to download file
@@ -35,13 +36,14 @@ class DataIngestion:
                 os.remove(tgz_download_dir)
 
             os.makedirs(tgz_download_dir, exist_ok=True)
-
+            
+            #Getting file name form url
             housing_file_name = os.path.basename(download_url)
 
             #complete file path
             tgz_file_path = os.path.join(tgz_download_dir,housing_file_name)
             
-            logging.info("Downloading file from : [{download_url}] into : [{tgz_file_path}]")
+            logging.info(f"Downloading file from : [{download_url}] into : [{tgz_file_path}]")
             #downloading file
 
             urllib.request.urlretrieve(download_url, tgz_file_path)
@@ -81,7 +83,7 @@ class DataIngestion:
             logging.info(f"Reading csv file: [{housing_file_path}]")
             housing_data_frame = pd.read_csv(housing_file_path)
 
-            housing_data_frame["income_cat"] = pd.cut (
+            housing_data_frame["income_cat"] = pd.cut(
                 housing_data_frame["median_income"],
                 bins = [0.0, 1.5, 3.0, 4.5 , 6.0, np.inf],
                 labels=[1,2,3,4,5]   
@@ -93,6 +95,7 @@ class DataIngestion:
             strat_train_set = None
             strat_test_set = None
 
+            #StratifiedShuffleSplit splits data in to train and test having same statistal distribution 
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
 
             for train_index,test_index in split.split(housing_data_frame, housing_data_frame["income_cat"]):
@@ -135,7 +138,7 @@ class DataIngestion:
             return self.split_data_as_train_test()
         except Exception as e:
             raise HousingExcecption(e,sys) from e
-
+    
 
     def __del__(self):
         logging.info(f"{'='*20}Data Ingestion log completed.{'='*20} \n \n")
