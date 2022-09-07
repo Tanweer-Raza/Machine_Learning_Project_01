@@ -1,7 +1,6 @@
 from flask import Flask, request
 import sys
 
-import pip
 from housing.util.util import read_yaml_file, write_yaml_file
 from matplotlib.style import context
 from housing.logger import logging
