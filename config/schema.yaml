@@ -1,4 +1,5 @@
 # Schema is all about the details about data.It defines our dataset
+
 columns:
   longitude: float
   latitude: float

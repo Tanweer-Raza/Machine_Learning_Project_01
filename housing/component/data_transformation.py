@@ -1,5 +1,3 @@
-
-from posixpath import basename
 from housing.exception import HousingExcecption
 from housing.logger import logging
 import sys, os
@@ -40,7 +38,8 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
                  total_rooms_ix=3,
                  population_ix=5,
                  households_ix=6,
-                 total_bedrooms_ix=4, columns=None):
+                 total_bedrooms_ix=4, 
+                 columns=None):
         """
         FeatureGenerator Initialization
         add_bedrooms_per_room: bool
